@@ -1,53 +1,27 @@
-import { add, get, update, remove } from "./services/api";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-const booksUrl = "http://localhost:3000/books";
+import Navbar from "./components/Navbar";
+import Books from "./pages/Books";
+import Authors from "./pages/Authors";
+import Borrowing from "./pages/Borrowing";
 
-function App() {
-
-  const testGet = async () => {
-    const result = await get(booksUrl);
-    console.log("GET:", result);
-  };
-
-  const testAdd = async () => {
-    const newBook = {
-      title: "The Trial",
-      authorId: "5",
-      category: "Novel",
-      available: true
-    };
-
-    const result = await add(booksUrl, newBook);
-    console.log("POST:", result);
-  };
-
-  const testUpdate = async () => {
-    const updatedBook = {
-      title: "1984 - Updated",
-      authorId: "1",
-      category: "Dystopian",
-      available: false
-    };
-
-    const result = await update(booksUrl, updatedBook, "1");
-    console.log("PUT:", result);
-  };
-
-  const testDelete = async () => {
-    const result = await remove(booksUrl, "6");
-    console.log("DELETE:", result);
-  };
-
+const App = () => {
   return (
-    <div>
-      <h1>API Test</h1>
+    <div className="flex min-h-screen bg-[#F5F7FA]">
+      <Navbar />
+      <main className="min-w-0 flex-1">
+        <Routes>
+          <Route path="/books" element={<Books />} />
 
-      <button onClick={testGet}>GET Books</button>
-      <button onClick={testAdd}>ADD Book</button>
-      <button onClick={testUpdate}>UPDATE Book</button>
-      <button onClick={testDelete}>DELETE Book</button>
+          <Route path="/authors" element={<Authors />} />
+
+          <Route path="/borrowing" element={<Borrowing />} />
+
+          <Route path="*" element={<Navigate to="/books" />} />
+        </Routes>
+      </main>
     </div>
   );
-}
+};
 
 export default App;

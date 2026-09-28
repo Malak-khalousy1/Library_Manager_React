@@ -1,5 +1,3 @@
-const BaseUrl = "http://localhost:3000";
-
 export const add = async (url, data) => {
   try {
     const response = await fetch(url, {
@@ -15,9 +13,11 @@ export const add = async (url, data) => {
     }
 
     const result = await response.json();
+
     return result;
   } catch (error) {
     console.error("My Server Error", error);
+    throw error;
   }
 };
 
@@ -36,24 +36,30 @@ export const update = async (url, data, id) => {
     }
 
     const result = await response.json();
+
     return result;
   } catch (error) {
     console.error("My Server Error", error);
+    throw error;
   }
 };
 
 export const get = async (url) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       throw new Error(response.status);
     }
 
     const result = await response.json();
+
     return result;
   } catch (error) {
     console.error("My Server Error", error);
+    throw error;
   }
 };
 
@@ -68,8 +74,10 @@ export const remove = async (url, id) => {
     }
 
     const result = await response.json();
+
     return result;
   } catch (error) {
     console.error("My Server Error", error);
+    throw error;
   }
 };
